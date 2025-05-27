@@ -1,0 +1,39 @@
+from enum import Enum
+
+class Status(Enum):
+    DRAFT = "Черновик"
+    REVIEW = "На согласовании"
+    APPROVED = "Утверждён"
+    REJECTED = "Отклонён"
+
+class Document:
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+        self.status = Status.DRAFT
+
+    def send_for_review(self):
+        if self.status == Status.DRAFT:
+            self.status = Status.REVIEW
+            return True
+        return False
+
+    def approve(self):
+        if self.status == Status.REVIEW:
+            self.status = Status.APPROVED
+            return True
+        return False
+
+    def reject(self):
+        if self.status == Status.REVIEW:
+            self.status = Status.REJECTED
+            return True
+        return False
+
+
+doc = Document("Договор", "Иванов")
+print(doc.status.value)  
+doc.send_for_review()
+print(doc.status.value)  
+doc.approve()
+print(doc.status.value) 
